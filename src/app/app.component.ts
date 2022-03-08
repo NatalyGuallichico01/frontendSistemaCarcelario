@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ClientelaravelService } from './service/clientelaravel.service';
+import { LogoutService} from './service/logout.service';
+
 
 @Component({
   selector: 'app-root',
@@ -21,6 +24,18 @@ export class AppComponent {
 
     })
   }
+  LogoutUser():void{
+    let token =localStorage.getItem('tokenUser');
+    this.servc.logoutUser(token).subscribe((r) => {
+      console.log(r)
+     localStorage.removeItem("tokenUser");
+     localStorage.removeItem("InfoUser");
+     //this.router.navigate(['/welcome']);
+   }, (error) => {
+     console.log("respuesta error logout", error);
+ 
+   });
+   }
 
 }
 
